@@ -1,0 +1,620 @@
+
+Лабораторна робота №11. Взаємодія з користувачем шляхом механізму
+введення/виведення
+
+
+
+#include <stdio.h>
+
+int main() {
+    // 1. 
+    printf("Hello, World!\n");
+
+    // 2. 
+    int num;
+    scanf("%d", &num);
+
+    // 3. В ч
+    // Formatlı çıkış
+    printf("Number: %d\n", 10);
+    // Formatsız çıkış
+    puts("Hello, World!");
+
+    // 4. У 
+    #include <stdio.h>
+
+    // 5. ?
+    int num = 10;
+    int *ptr = &num;
+
+    // 6. 
+    printf("Integer: %d, String: %s, Float: %.2f\n", 10, "text", 3.14);
+
+    // 7.
+    int num;
+    scanf("%d", &num);
+
+    // 8. Я
+    printf("Hello, World!\n");
+
+    // 9. лy
+    char str[100];
+    fgets(str, 100, stdin);
+
+    // 10. Я
+    char str[] = "Hello World!";
+    puts(str);
+    // veya
+    printf("%s\n", str);
+
+    return 0;
+}
+
+
+
+
+
+Лабораторна робота №12. Строки (Null-terminated C Strings)
+Структура директорії для лабораторної роботи
+
+
+
+
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    // 1. Як “склеїти” два рядки?
+    char str1[100] = "Hello, ";
+    char str2[] = "World!";
+    strcat(str1, str2); // str1'e str2'nin içeriği eklenir
+
+    // 2. Як визначити, чи є в заданому рядку заданий підрядок?
+    char str3[100] = "Merhaba, Dünya!";
+    char *substring = strstr(str3, "Dünya"); // str3 içinde "Dünya" alt dizisi aranır
+
+    if (substring != NULL) {
+        printf("Substring found at index: %ld\n", substring - str3);
+    } else {
+        printf("Substring not found\n");
+    }
+
+    // 3. Чому рядки в мові C мають назву “Null-terminated C Strings” ?
+    // C dilindeki dizeler null ('\0') karakteri ile sonlandırıldığı için Null-terminated C Strings olarak adlandırılır.
+
+    // 4. Як порівняти два рядки?
+    char str4[] = "apple";
+    char str5[] = "banana";
+
+    int result = strcmp(str4, str5); // str4 ve str5 karşılaştırılır
+    if (result < 0) {
+        printf("%s comes before %s\n", str4, str5);
+    } else if (result > 0) {
+        printf("%s comes after %s\n", str4, str5);
+    } else {
+        printf("%s is equal to %s\n", str4, str5);
+    }
+
+    // 5. Як у заданому рядку видалити заданий підрядок?
+    char str6[100] = "Merhaba, Dünya!";
+    char *substr = "Dünya";
+    char *ptr = strstr(str6, substr); // str6 içinde substr dizisi aranır
+
+    if (ptr != NULL) {
+        memmove(ptr, ptr + strlen(substr), strlen(ptr + strlen(substr)) + 1); // substr'nin sonrasındaki kısmı siler
+        printf("Updated string: %s\n", str6);
+    } else {
+        printf("Substring not found\n");
+    }
+
+    return 0;
+}
+
+
+
+
+
+Лабораторна робота №13. Взаємодія з файлами
+Структура директорії для лабораторної роботи
+
+
+
+
+
+
+#include <stdio.h>
+
+int main() {
+    // 1. Що таке файл?
+    // Dosya, verileri depolamak için kullanılan bir veri yapıları koleksiyonudur.
+
+    // 2. Які існують функції неформатованого введення даних?
+    // scanf, getchar, gets gibi fonksiyonlar formata bağlı olmadan veri girişi sağlar.
+
+    // 3. Які існують функції неформатованого виведення даних?
+    // printf, putchar, puts gibi fonksiyonlar formata bağlı olmadan veri çıkışı sağlar.
+
+    // 4. Як визначити розмір файлу?
+    FILE *file = fopen("dosya.txt", "r");
+    fseek(file, 0L, SEEK_END);
+    long size = ftell(file);
+    fclose(file);
+
+    // 5. Як виконувати читання даних з файлу, коли кількість їх невідома?
+    FILE *dosya = fopen("dosya.txt", "r");
+    char ch;
+    while ((ch = fgetc(dosya)) != EOF) {
+        printf("%c", ch);
+    }
+    fclose(dosya);
+
+    // 6. Чи можна форматувати дані при їх записі у файл?
+    // Evet, fprintf gibi fonksiyonlar kullanılarak veriler formatlı bir şekilde dosyaya yazılabilir.
+
+    // 7. Як ввести з файлу та записати у файл рядки?
+    FILE *file1 = fopen("input.txt", "r");
+    FILE *file2 = fopen("output.txt", "w");
+    char str[100];
+    while (fgets(str, sizeof(str), file1) != NULL) {
+        fprintf(file2, "%s", str);
+    }
+    fclose(file1);
+    fclose(file2);
+
+    // 8. Як ввести з файлу та записати у файл символ?
+    FILE *f1 = fopen("input.txt", "r");
+    FILE *f2 = fopen("output.txt", "w");
+    char ch;
+    while ((ch = fgetc(f1)) != EOF) {
+        fputc(ch, f2);
+    }
+    fclose(f1);
+    fclose(f2);
+
+    // 9. Порівняйте текстові та бінарні файли
+    // Text files: İnsan tarafından okunabilir, metin verilerini saklamak için kullanılır.
+    // Binary files: İnsan tarafından okunamaz, genellikle programlar arası veri alışverişi için kullanılır.
+
+    return 0;
+}
+
+
+
+
+
+
+
+Лабораторна робота №14. Структуровані типи даних
+Загальне завдання
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+
+// 1. Як виконати доступ до окремих елементів структури?
+struct Ogrenci {
+    char ad[20];
+    int yas;
+};
+
+int main() {
+    struct Ogrenci ogrenci1 = {"Ali", 20};
+    printf("Ad: %s, Yas: %d\n", ogrenci1.ad, ogrenci1.yas);
+    
+    // 2. Чи можна вміст однієї структури привласнити іншій того ж типу, використовуючи звичайний оператор присвоювання?
+    struct Ogrenci ogrenci2;
+    ogrenci2 = ogrenci1;
+    
+    // 3. Коли необхідно використовувати покажчики на структури?
+    // Fonksiyonlar arası veri geçişi yapılırken bellekten tasarruf etmek ve verileri doğrudan değiştirebilmek için.
+    
+    // 4. Чи може бути членом структури інша структура?
+    struct Adres {
+        char sehir[20];
+        int posta_kodu;
+    };
+    
+    struct Ogrenci2 {
+        char ad[20];
+        int yas;
+        struct Adres adres;
+    };
+
+    // 5. Чим відрізняється об’єднання від структури?
+    // Birleşimler, tüm üyelerin aynı bellek alanını paylaştığı, farklı üyeler arasında bir bellek tasarrufu sağlayan bir veri yapısıdır.
+    
+    // 6. Чим відрізняються бітові поля від звичайних структур?
+    // Bit alanları, bellek kullanımını minimize etmek için kullanılır; yani daha az bellek kullanımı ancak daha sınırlı veri tutma kapasitesi sağlar.
+    
+    // 7. Що являє собою перерахування?
+    enum Renk {KIRMIZI, YESIL, MAV};
+    enum Renk secim = KIRMIZI;
+    
+    // 8. Що являє собою суміш?
+    union Sayi {
+        int tam_sayi;
+        float ondalik_sayi;
+    };
+    union Sayi deger;
+    deger.tam_sayi = 10;
+    printf("Tam sayi: %d, Ondalik sayi: %f\n", deger.tam_sayi, deger.ondalik_sayi);
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+Лабораторна робота №15. Динамічні масиви
+Структура директорії для лабораторної роботи
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// 1. Яким чином можна додавати нові елементи до динамічного масиву?
+int main() {
+    int *dynamicArray = NULL;
+    int newSize = 5;
+    dynamicArray = (int *)malloc(newSize * sizeof(int)); // Başlangıçta bir bellek alanı tahsis edilir
+
+    // Yeni bir eleman eklemek için, önce bellek alanını yeniden boyutlandırırız
+    newSize++;
+    dynamicArray = (int *)realloc(dynamicArray, newSize * sizeof(int));
+
+    // Yeni elemanı ekleriz
+    dynamicArray[newSize - 1] = 10;
+
+    free(dynamicArray); // Bellek sızıntısını önlemek için belleği serbest bırakırız
+    return 0;
+}
+
+// 2. Опишіть структуру для створення динамічного масиву.
+struct DynamicArray {
+    int *data;
+    int size;
+};
+
+// 3. Чим відрізняється динамічний масив від звичайного?
+// Dinamik dizi, çalışma zamanında bellek boyutunu değiştirebilirken, normal dizi sabit bir boyuta sahiptir.
+
+// 4. Як виконати додавання елементу у динамічний масив?
+void addToDynamicArray(struct DynamicArray *arr, int element) {
+    arr->size++;
+    arr->data = (int *)realloc(arr->data, arr->size * sizeof(int));
+    arr->data[arr->size - 1] = element;
+}
+
+// 5. Як виконати виділення елементу з динамічного масиву?
+int removeFromDynamicArray(struct DynamicArray *arr, int index) {
+    if (index < 0 || index >= arr->size) {
+        return -1; // Geçersiz dizin
+    }
+
+    int removedElement = arr->data[index];
+
+    // Diziden elemanı kaldırırken, elemanların boşluğu kapatılmalıdır.
+    for (int i = index; i < arr->size - 1; i++) {
+        arr->data[i] = arr->data[i + 1];
+    }
+
+    arr->size--;
+    arr->data = (int *)realloc(arr->data, arr->size * sizeof(int));
+
+    return removedElement;
+}
+
+
+
+
+
+
+
+
+
+Лабораторна робота №16. (х2) Динамічні списки
+Структура директорії для лабораторної робот
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+// 1. Як виконати доступ до заданого за номером елементу списку?
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* getElement(Node* head, int index) {
+    Node* current = head;
+    int count = 0;
+    while (current != nullptr) {
+        if (count == index) return current;
+        count++;
+        current = current->next;
+    }
+    return nullptr;
+}
+
+// 2. Яким чином можна додавати нові елементи до списку?
+void addElement(Node** head, int newData) {
+    Node* newNode = new Node();
+    newNode->data = newData;
+    newNode->next = (*head);
+    (*head) = newNode;
+}
+
+// 3. Яке призначення головного елементу списку?
+// 8. Навіщо потрібний головний елемент у списку?
+// Başlangıç noktasını belirtir, listeye erişimi sağlar.
+
+// 4. Як визначається кінець списку?
+// Sonraki göstergesi (next pointer) nullptr olduğunda liste sonlanır.
+
+// 5. Скільки покажчиків може мати елемент списку?
+// Tek yönlü listede bir, çift yönlü listede iki.
+
+// 6. Опишіть структуру для створення односпрямованого списку.
+struct SingleNode {
+    int data;
+    SingleNode* next;
+};
+
+// 7. Що таке список?
+// Veri yapısı, düğümlerden oluşur, her düğüm bir veri ve bir sonraki düğüme işaretçi içerir.
+
+// 9. Як поміняти місцями два елементи, адреси яких задані?
+void swapNodes(Node** head, Node* node1, Node* node2) {
+    if (node1 == node2) return;
+
+    Node* prev1 = nullptr, *prev2 = nullptr, *temp = *head;
+    while (temp && temp->next) {
+        if (temp->next == node1) prev1 = temp;
+        if (temp->next == node2) prev2 = temp;
+        temp = temp->next;
+    }
+
+    if (prev1) prev1->next = node2;
+    if (prev2) prev2->next = node1;
+    temp = node1->next;
+    node1->next = node2->next;
+    node2->next = temp;
+
+    if (*head == node1) *head = node2;
+    else if (*head == node2) *head = node1;
+}
+
+// 10. Перерахуйте усі переваги і недоліки списку у порівнянні з масивом?
+// Avantajlar: Dinamik boyut, kolay ekleme/çıkarma. Dezavantajlar: Bellek israfı, ardışık olmayan bellek.
+
+// 11. Опишіть структуру для створення двоспрямованого списку.
+struct DoubleNode {
+    int data;
+    DoubleNode* next;
+    DoubleNode* prev;
+};
+
+// 12. Чим характеризується двоспрямований список?
+// Her düğüm hem bir sonraki hem de bir önceki düğüme işaret eder.
+
+// 13. Навіщо потрібні головний та хвостовий елементи у списку?
+// Başlangıç ve bitiş noktalarını belirtir, listeye erişimi ve eklemeleri kolaylaştırır.
+
+// 14. Напишіть програмний код для переміщення від голови до хвоста списку.
+void traverseFromHead(Node* head) {
+    Node* current = head;
+    while (current != nullptr) {
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+// 15. Напишіть програмний код для переміщення від хвоста до голови списку.
+void traverseFromTail(DoubleNode* tail) {
+    DoubleNode* current = tail;
+    while (current != nullptr) {
+        cout << current->data << " ";
+        current = current->prev;
+    }
+    cout << endl;
+}
+
+// 16. Скільки покажчиків може мати елемент списку?
+// Tek yönlü listede bir, çift yönlü listede iki.
+
+// 17. Чим відрізняється лінійний список від нелінійного?
+// Lineer listeler sıralıdır, non-lineer listeler ağaç veya graf yapısındadır.
+
+// 18. Що таке “кільцевий двоспрямований список”? Як його створити?
+struct CircularDoubleNode {
+    int data;
+    CircularDoubleNode* next;
+    CircularDoubleNode* prev;
+};
+
+// 19. Чому при сортуванні вмісту списку виконується не переміщення вмісту поля даних, а змінюється порядок елементів у списку шляхом зміни покажчиків на наступні елементи?
+// Bellek verimliliği ve performans için.
+
+// 20. Скільки покажчиків може мати елемент списку? Що таке “мультисписок”?
+// Birden fazla gösterici olabilir. Multilists, birden fazla bağlantıya sahip düğümler içerir.
+
+int main() {
+    Node* head = nullptr;
+    addElement(&head, 1);
+    addElement(&head, 2);
+    addElement(&head, 3);
+    Node* elem = getElement(head, 1);
+    if (elem) cout << "Element at index 1: " << elem->data << endl;
+
+    DoubleNode* tail = new DoubleNode{1, nullptr, nullptr};
+    DoubleNode* second = new DoubleNode{2, nullptr, tail};
+    tail->next = second;
+    DoubleNode* third = new DoubleNode{3, nullptr, second};
+    second->next = third;
+
+    traverseFromHead(head);
+    traverseFromTail(third);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Модуль 6. Об’єктно-орієнтовне програмування
+Лабораторна робота №17. ООП. Вступ до ОО
+
+
+
+
+#include <iostream>
+using namespace std;
+
+// 1. Що таке клас? Чим він відрізняється від структури?
+class MyClass {
+public:
+    int x;
+    void display() {
+        cout << "x: " << x << endl;
+    }
+};
+
+// 2. Що таке метод? Чим він відрізняється від функції?
+class MyClass2 {
+public:
+    void method() {
+        cout << "This is a method." << endl;
+    }
+};
+
+// 3. Що таке інкапсуляція?
+class MyClass3 {
+private:
+    int data;
+public:
+    void setData(int d) { data = d; }
+    int getData() { return data; }
+};
+
+// 4. Що таке константні методи? Наведіть приклади.
+class MyClass4 {
+public:
+    int data;
+    void display() const {
+        cout << "Data: " << data << endl;
+    }
+};
+
+// 5. Як визначити розмір об’єкта у пам’яті?
+class MyClass5 {
+    int data;
+    char ch;
+};
+
+// 6. Для чого потрібні права доступу?
+// 7. Які методи потрібні для доступу до private-атрибутів?
+class MyClass6 {
+private:
+    int data;
+public:
+    void setData(int d) { data = d; }
+    int getData() { return data; }
+};
+
+// 8. Для чого потрібні const-методи?
+// 9. Коли є смисл у константних методах?
+// 10. Чи може бути атрибут константним?
+class MyClass7 {
+public:
+    const int constantValue;
+    MyClass7(int value) : constantValue(value) {}
+};
+
+// 11. Для чого потрібні конструктори?
+// 12. Які ви знаєте відмінності конструкторів?
+// 13. Чи можна перевантажувати конструктори?
+class MyClass8 {
+public:
+    int x;
+    MyClass8() { x = 0; }
+    MyClass8(int val) { x = val; }
+};
+
+// 14. Для чого потрібні деструктори?
+// 15. Які відмінності деструктора?
+// 16. Що таке конструктор копіювання? Для чого він потрібен?
+class MyClass9 {
+public:
+    int* data;
+    MyClass9(int value) { data = new int(value); }
+    MyClass9(const MyClass9& other) {
+        data = new int(*other.data);
+    }
+    ~MyClass9() { delete data; }
+};
+
+// 17. Коли викликаються конструктори та деструктор?
+// 18. Що таке списки ініціалізації?
+class MyClass10 {
+public:
+    int x;
+    int y;
+    MyClass10(int a, int b) : x(a), y(b) {}
+};
+
+// 19. Що таке перевантаження методів?
+class MyClass11 {
+public:
+    void func(int x) { cout << "Integer: " << x << endl; }
+    void func(double x) { cout << "Double: " << x << endl; }
+};
+
+// 20. Чим визначається виклик перевантажених методів?
+
+int main() {
+    // 5. Як визначити розмір об’єкта у пам’яті?
+    MyClass5 obj;
+    cout << "Size of object: " << sizeof(obj) << " bytes" << endl;
+
+    return 0;
+}
+
+
